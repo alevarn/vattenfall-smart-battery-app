@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Visualization System For A Battery">
+    <meta name="keywords" content="Visualization, System, Battery">
+    <meta name="copyright" content="Vattenfall AB">
+    <title>Visualization System For A Battery</title>
+    <link rel="stylesheet" href="style/reset.css">
+    <link rel="stylesheet" href="style/layout.css">
+    <link rel="stylesheet" href="style/main.css">
+    <script src="third-party/gauge.min.js"></script>
+    <script src="third-party/moment.min.js"></script>
+    <script src="third-party/Chart.min.js"></script>
+</head>
+
+<body>
+    <div class="dashboard">
+
+        <div class="battery-column column">
+            <div class="soc-row row">
+                <div class="row-title">
+                    STATE OF CHARGE
+                </div>
+                <div class="soc-text center">
+                    <span class="soc-value">0</span><span class="soc-unit">%</span>
+                </div>
+            </div>
+            <div class="battery-figure-row row">
+                <div class="row-title">
+                    BATTERY FIGURE
+                </div>
+                <div class="row-content">
+                    <div class="battery-figure">
+                        <div class="battery-figure-top"></div>
+                        <div class="battery-figure-bottom">
+                            <div class="battery-figure-soc"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="power-column column">
+            <div class="status-row row">
+                <div class="row-title">
+                    BATTERY STATUS
+                </div>
+                <div class="status-text center">
+                    <span class="status-value yellow">IDLE</span>
+                </div>
+            </div>
+            <div class="power-row row disable">
+                <div class="row-title">
+                    POWER
+                </div>
+                <canvas width="400" height="300" class="power-gauge center"></canvas>
+                <div class="power-text">
+                    <span class="power-value">0</span><span class="power-unit">%</span>
+                </div>
+            </div>
+            <div class="time-row row disable">
+                <div class="row-title">
+                    TIME
+                </div>
+                <span class="time-text center">
+                    ~<span class="time-value">0</span><span class="time-unit">h</span><span class="time-value">0</span><span class="time-unit">min</span>
+                </span>
+                <span class="time-description">...</span>
+            </div>
+        </div>
+
+        <div class="history-column column">
+            <div class="soc-history-row row">
+                <div class="row-title">
+                    STATE OF CHARGE THE LAST 3 DAYS
+                </div>
+                <div class="row-content soc-graph-container">
+                    <canvas class="soc-graph"></canvas>
+                </div>
+            </div>
+            <div class="power-history-row row">
+                <div class="row-title">
+                    CHARGE/DISCHARGE POWER THE LAST 3 DAYS
+                </div>
+                <div class="row-content power-graph-container">
+                    <canvas class="power-graph"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="script/battery.js"></script>
+    <script src="script/gauge.js"></script>
+    <script src="script/graphs.js"></script>
+    <script src="script/fetcher.js"></script>
+    <script src="script/updater.js"></script>
+</body>
+
+</html>

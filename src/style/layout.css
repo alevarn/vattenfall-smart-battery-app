@@ -1,0 +1,83 @@
+.dashboard {
+    width: 100%;
+    height: 100vh;
+    padding: 16px;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+}
+
+.column {
+    height: 100%;
+    margin-right: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.column:last-child {
+    margin-right: 0px;
+}
+
+.battery-column {
+    width: 20%;
+}
+
+.power-column {
+    width: 30%;
+}
+
+.history-column {
+    width: 50%;
+}
+
+.row {
+    position: relative;
+    margin-bottom: 16px;
+}
+
+.row:last-child {
+    margin-bottom: 0px;
+}
+
+.row-title {
+    height: 2.5rem;
+    line-height: 2.5rem;
+    padding-left: 0.6rem;
+    box-sizing: border-box;
+}
+
+.row-content {
+    position: absolute;
+    top: 2.5rem;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+}
+
+.soc-row {
+    height: 30%;
+}
+
+.battery-figure-row {
+    height: 70%;
+}
+
+.status-row {
+    height: 25%;
+}
+
+.power-row {
+    height: 50%;
+}
+
+.time-row {
+    height: 25%;
+}
+
+.soc-history-row {
+    height: 50%;
+}
+
+.power-history-row {
+    height: 50%;
+}
