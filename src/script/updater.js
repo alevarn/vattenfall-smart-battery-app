@@ -1,5 +1,9 @@
-const UPDATE_FREQUENCY_MS = 10;
+/**
+ * The number of milliseconds we will wait before we ask the server for new data.
+ */
+const UPDATE_FREQUENCY_MS = 1000;
 
+// Different elements in the dashboard that will be updated.
 const socValueElement = document.querySelector('.soc-value');
 const batteryFigureSocElement = document.querySelector('.battery-figure-soc');
 const statusTextElement = document.querySelector('.status-text');
@@ -12,9 +16,13 @@ const powerValueElement = document.querySelector('.power-value');
 const timeTextElement = document.querySelector('.time-text');
 const timeDescriptionElement = document.querySelector('.time-description');
 
+// We create a battery instance and a fetcher instance.
 const battery = new Battery();
 const fetcher = new Fetcher();
 
+/**
+ * Update the elements in the dashboard using the battery instance.
+ */
 function updateDashboard() {
     socValueElement.textContent = battery.stateOfCharge.toFixed(0);
 
@@ -76,25 +84,36 @@ function updateDashboard() {
     powerGraph.update();
 }
 
+/**
+ * Ask the server for updates using a certain frequency.
+ */
 async function getUpdatesFromServer() {
     try {
+        // Try to get an update from the server.
         let nextUpdate = await fetcher.getNext();
 
         if (nextUpdate.received) {
             let { interval, stateOfCharge, power } = nextUpdate.data;
 
+            // Fix! If the values were empty we use the old values.
             if (stateOfCharge == '') stateOfCharge = battery.stateOfCharge;
             if (power == '') power = battery.power;
 
+            // Update the battery instance.
             battery.update(interval, Number(stateOfCharge), Number(power));
+
+            // Update the dashboard.
             updateDashboard(battery);
+
+            // Schedule the next update from the server.
             setTimeout(getUpdatesFromServer, UPDATE_FREQUENCY_MS);
         } else {
-            alert('Failed to receive data from server. Please refresh the page to try again!');
+            alert('Failed to receive data from the server. Please refresh the page to try again!');
         }
     } catch {
-        alert('Failed to receive data from server. Please refresh the page to try again!');
+        alert('Failed to receive data from the server. Please refresh the page to try again!');
     }
 }
 
+// Start getting updates when the window is ready.
 window.addEventListener('load', () => getUpdatesFromServer());
