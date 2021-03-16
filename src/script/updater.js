@@ -1,4 +1,3 @@
-const THREE_DAYS_IN_SECONDS = 3600 * 24 * 3;
 const UPDATE_FREQUENCY_MS = 1000;
 
 const socValueElement = document.querySelector('.soc-value');
@@ -35,7 +34,7 @@ function updateDashboard(battery) {
             timeTitleElement.innerHTML = '<span class="green">CHARGING</span> TIME';
 
             const secondsUntilFull = battery.getSecondsUntilFullyCharged();
-            if (secondsUntilFull <= THREE_DAYS_IN_SECONDS) {
+            if (secondsUntilFull <= 3600 * 24 * 3) {
                 timeTextElement.innerHTML = `~<span class="time-value">${Math.trunc(secondsUntilFull / 3600)}</span><span class="time-unit">h</span><span class="time-value">${Math.trunc(secondsUntilFull / 60) % 60}</span><span class="time-unit">min</span>`;
             } else {
                 timeTextElement.innerHTML = 'several days';
@@ -51,7 +50,7 @@ function updateDashboard(battery) {
             timeTitleElement.innerHTML = '<span class="red">DISCHARGING</span> TIME';
 
             const secondsUntilEmpty = battery.getSecondsUntilEmpty();
-            if (secondsUntilEmpty <= THREE_DAYS_IN_SECONDS) {
+            if (secondsUntilEmpty <= 3600 * 24 * 3) {
                 timeTextElement.innerHTML = `~<span class="time-value">${Math.trunc(secondsUntilEmpty / 3600)}</span><span class="time-unit">h</span><span class="time-value">${Math.trunc(secondsUntilEmpty / 60) % 60}</span><span class="time-unit">min</span>`;
             } else {
                 timeTextElement.innerHTML = 'several days';

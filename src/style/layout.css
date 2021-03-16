@@ -1,3 +1,5 @@
+/* This CSS file sets up the layout of the dashboard with columns and rows and defines how much space the columns and rows should take on the screen */
+
 .dashboard {
     width: 100%;
     height: 100vh;

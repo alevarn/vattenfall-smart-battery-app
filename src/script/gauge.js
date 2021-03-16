@@ -1,3 +1,5 @@
+// This file will setup the charging/discharging power gauge in the visualization system.
+
 const powerGaugeElement = document.querySelector('.power-gauge');
 
 const opts = {

@@ -1,3 +1,6 @@
+// This file will setup the two line graphs in the visualization system.
+
+// A line graph over how the state of charge has changed the last 3 days.
 const socGraph = new Chart(document.querySelector('.soc-graph').getContext('2d'), {
     type: 'line',
     data: {
@@ -41,6 +44,7 @@ const socGraph = new Chart(document.querySelector('.soc-graph').getContext('2d')
     }
 });
 
+// A line graph over how the charging/discharging power has changed the last 3 days.
 const powerGraph = new Chart(document.querySelector('.power-graph').getContext('2d'), {
     type: 'line',
     data: {
@@ -76,8 +80,8 @@ const powerGraph = new Chart(document.querySelector('.power-graph').getContext('
                     callback: function (value, index, values) {
                         return `${value} kW`;
                     },
-                    min: -BatteryInfo.MAX_POWER / KILO,
-                    max: BatteryInfo.MAX_POWER / KILO
+                    min: -BatteryInfo.MAX_POWER / 1000,     // We use kilowatt instead of watt on the y-axis to ease readability. 
+                    max: BatteryInfo.MAX_POWER / 1000
                 }
             }]
         }
