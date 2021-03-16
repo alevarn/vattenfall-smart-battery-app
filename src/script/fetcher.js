@@ -3,28 +3,23 @@ const ServerInfo = Object.freeze({
 });
 
 class Fetcher {
-    constructor(data) {
-        this.data = data;
-        this.currentIndex = 0;
+    constructor() {
+        this.time = moment('2021-01-19 21:00');
     }
 
-    static async retrieveAllData() {
-        const res = await fetch(ServerInfo.URL);
-        const data = await res.json();
-        return new Fetcher(data);
-    }
+    async getNext() {
+        const response = await fetch(`${ServerInfo.URL}?interval=${this.time.format('YYYY-MM-DD%20HH:mm')}`);
+        const data = await response.json();
 
-    hasNext() {
-        return this.currentIndex < this.data.length;
-    }
-
-    getNext() {
-        const entry = this.data[this.currentIndex++];
+        this.time.add(15, 'm');
 
         return {
-            interval: entry['Interval'],
-            stateOfCharge: entry['DESM-Master-PLC-bd/AvgValue'].avg,
-            power: entry['DESM-MasterController-Bergsöe1-bb/AvgValue'].avg
+            received: data !== null,
+            data: {
+                interval: data['Interval'],
+                stateOfCharge: data['DESM-Master-PLC-bd/AvgValue'].avg,
+                power: data['DESM-MasterController-Bergsöe1-bb/AvgValue'].avg
+            }
         };
     }
 }

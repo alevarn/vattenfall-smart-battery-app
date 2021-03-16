@@ -1,4 +1,4 @@
-const UPDATE_FREQUENCY_MS = 1000;
+const UPDATE_FREQUENCY_MS = 10;
 
 const socValueElement = document.querySelector('.soc-value');
 const batteryFigureSocElement = document.querySelector('.battery-figure-soc');
@@ -12,11 +12,14 @@ const powerValueElement = document.querySelector('.power-value');
 const timeTextElement = document.querySelector('.time-text');
 const timeDescriptionElement = document.querySelector('.time-description');
 
-function updateDashboard(battery) {
+const battery = new Battery();
+const fetcher = new Fetcher();
+
+function updateDashboard() {
     socValueElement.textContent = battery.stateOfCharge.toFixed(0);
-    
+
     batteryFigureSocElement.style.height = `${battery.stateOfCharge.toFixed(0)}%`;
-    if(battery.stateOfCharge < 20) {
+    if (battery.stateOfCharge < 20) {
         batteryFigureSocElement.style.backgroundColor = '#c00d0df2';
     } else {
         batteryFigureSocElement.style.backgroundColor = '#0dc00df2';
@@ -73,23 +76,25 @@ function updateDashboard(battery) {
     powerGraph.update();
 }
 
-async function simulateRealTimeSystem() {
-    const battery = new Battery();
-    const fetcher = await Fetcher.retrieveAllData();
+async function getUpdatesFromServer() {
+    try {
+        let nextUpdate = await fetcher.getNext();
 
-    const interval = setInterval(() => {
-        if (fetcher.hasNext()) {
-            let { interval, stateOfCharge, power } = fetcher.getNext();
+        if (nextUpdate.received) {
+            let { interval, stateOfCharge, power } = nextUpdate.data;
 
             if (stateOfCharge == '') stateOfCharge = battery.stateOfCharge;
             if (power == '') power = battery.power;
 
             battery.update(interval, Number(stateOfCharge), Number(power));
             updateDashboard(battery);
+            setTimeout(getUpdatesFromServer, UPDATE_FREQUENCY_MS);
         } else {
-            clearInterval(interval);
+            alert('Failed to receive data from server. Please refresh the page to try again!');
         }
-    }, UPDATE_FREQUENCY_MS);
+    } catch {
+        alert('Failed to receive data from server. Please refresh the page to try again!');
+    }
 }
 
-window.addEventListener('load', () => simulateRealTimeSystem());
+window.addEventListener('load', () => getUpdatesFromServer());
