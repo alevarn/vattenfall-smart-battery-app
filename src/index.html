@@ -12,14 +12,18 @@
     <link rel="stylesheet" href="style/reset.css">
     <link rel="stylesheet" href="style/layout.css">
     <link rel="stylesheet" href="style/main.css">
+
+    <!-- Load third-party software -->
     <script src="third-party/gauge.min.js"></script>
     <script src="third-party/moment.min.js"></script>
     <script src="third-party/Chart.min.js"></script>
 </head>
 
 <body>
+    <!-- Container for the whole dashboard -->
     <div class="dashboard">
 
+        <!-- The left column that contains state of charge and battery figure -->
         <div class="battery-column column">
             <div class="soc-row row">
                 <div class="row-title">
@@ -44,6 +48,7 @@
             </div>
         </div>
 
+        <!-- The middle column that contains battery status, charging/discharging power and time until fully charged/discharged -->
         <div class="power-column column">
             <div class="status-row row">
                 <div class="row-title">
@@ -67,12 +72,14 @@
                     TIME
                 </div>
                 <span class="time-text center">
-                    ~<span class="time-value">0</span><span class="time-unit">h</span><span class="time-value">0</span><span class="time-unit">min</span>
+                    ~<span class="time-value">0</span><span class="time-unit">h</span><span
+                        class="time-value">0</span><span class="time-unit">min</span>
                 </span>
                 <span class="time-description">...</span>
             </div>
         </div>
 
+        <!-- The right column that contains the state of charge and the charge/discharge power over the last three days -->
         <div class="history-column column">
             <div class="soc-history-row row">
                 <div class="row-title">
@@ -94,6 +101,7 @@
 
     </div>
 
+    <!-- Load code that will setup different components in the dashboard and fetch data from the server and update the dashboard with this data -->
     <script src="script/battery.js"></script>
     <script src="script/gauge.js"></script>
     <script src="script/graphs.js"></script>
